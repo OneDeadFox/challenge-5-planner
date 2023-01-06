@@ -13,13 +13,14 @@ $(function () {
   let hourBlocks = $('.time-block');
   let saveButtons = $('.saveBtn');
   let scheduleInput = $('.description');
-
+  let firstLoad = localStorage.getItem('firstLoad');
   let todayDisplay = $('#currentDay');
 
   todayDisplay.text(dayjs());
 
   setTextValues();
   setRelativeColors();
+  addQuote();
 
   //Click Event Listener---------------------------------------
   //listen for clicks on the save button
@@ -28,9 +29,7 @@ $(function () {
     var inputActual = $(e.target).siblings('.description').val();
     
     localStorage.setItem(`${hour}`, inputActual);
-    setTextValues();
-    //console.log(localStorage.getItem(`${hour}`));
-    
+    setTextValues();    
   });
 
   //Functions--------------------------------------------------
@@ -50,8 +49,6 @@ $(function () {
       var hourActual = parseInt(idString);
       var hourCurrent = dayjs().format('H');
 
-      console.log(currentClass);
-
       if(hourActual - hourCurrent < 0){
         $(this).attr('class', `${currentClass} past `);
       } else if(hourActual - hourCurrent === 0){
@@ -60,5 +57,18 @@ $(function () {
         $(this).attr('class', `${currentClass} future`);
       }
     });
+  }
+
+  function addQuote(){
+    var quote = ['The', 'best', 'laid', 'plans', 'of', 'mice', 'and', 'men'];
+    var i = 0;
+
+    if(firstLoad === null){
+      $.each(hourBlocks, function(){
+        $(this).children('.description').val(quote[i]);
+        i++;
+      });
+      localStorage.setItem('firstLoad', 1);
+    }
   }
 });
