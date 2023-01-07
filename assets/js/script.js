@@ -16,8 +16,7 @@ $(function () {
   let firstLoad = localStorage.getItem('firstLoad');
   let todayDisplay = $('#currentDay');
 
-  todayDisplay.text(dayjs());
-
+  displayTime();
   setTextValues();
   setRelativeColors();
   addQuote();
@@ -34,6 +33,13 @@ $(function () {
 
   //Functions--------------------------------------------------
   //set text area value based on stored input
+  displayTime();
+  function displayTime(){
+      var dateTimeDisplay = setInterval(function(){
+              todayDisplay.text(dayjs().format('dddd, MMM DD, YYYY [at] hh:mm:ss a'));
+      }, 1000);
+  }
+
   function setTextValues(){
     $.each(hourBlocks, function(){
       $(this).children('.description').val(localStorage.getItem(`${$(this).attr('id')}`));
