@@ -71,7 +71,7 @@ $(function () {
 
     if(firstLoad === null){
       $.each(hourBlocks, function(){
-        $(this).children('.description').val(quote[i]);
+        $(this).children('.description').attr('placeholder', quote[i]);
         i++;
       });
       localStorage.setItem('firstLoad', 1);
